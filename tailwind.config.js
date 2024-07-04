@@ -18,6 +18,7 @@ export default {
       red: "#D73328",
     },
     spacing: {
+      0: "0",
       8: ".8rem",
       12: "1.2rem",
       16: "1.6rem",
