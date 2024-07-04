@@ -1,4 +1,5 @@
 import defaultTheme from "tailwindcss/defaultTheme";
+import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -18,53 +19,11 @@ export default {
     },
     spacing: {
       8: ".8rem",
-      12: ".12rem",
-      16: ".16rem",
-      24: ".24rem",
-      32: ".32rem",
-      40: ".40rem",
-    },
-    fontSize: {
-      1: [
-        "5.6rem",
-        {
-          fontWeight: "700",
-          letterSpacing: "-1.rem",
-          lineHeight: "125%",
-        },
-      ],
-      2: [
-        "2.4rem",
-        {
-          fontWeight: "700",
-          letterSpacing: "-1.rem",
-          lineHeight: "125%",
-        },
-      ],
-      3: [
-        "1.8rem",
-        {
-          fontWeight: "700",
-          letterSpacing: "-1.rem",
-          lineHeight: "125%",
-        },
-      ],
-      4: [
-        "1.6rem",
-        {
-          fontWeight: "500",
-          letterSpacing: "0",
-          lineHeight: "150%",
-        },
-      ],
-      5: [
-        "1.4rem",
-        {
-          fontWeight: "500",
-          letterSpacing: "0",
-          lineHeight: "150%",
-        },
-      ],
+      12: "1.2rem",
+      16: "1.6rem",
+      24: "2.4rem",
+      32: "3.2rem",
+      40: "4rem",
     },
     screens: {
       tablet: "768px",
@@ -76,5 +35,40 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".font-preset-1": {
+          "font-size": "5.6rem",
+          "font-weight": "700",
+          "letter-spacing": "-0.1rem",
+          "line-height": "125%",
+        },
+        ".font-preset-2": {
+          "font-size": "2.4rem",
+          "font-weight": "700",
+          "letter-spacing": "-0.1rem",
+          "line-height": "125%",
+        },
+        ".font-preset-3": {
+          "font-size": "1.8rem",
+          "font-weight": "700",
+          "letter-spacing": "-0.1rem",
+          "line-height": "125%",
+        },
+        ".font-preset-4": {
+          "font-size": "1.6rem",
+          "font-weight": "500",
+          "letter-spacing": "0",
+          "line-height": "150%",
+        },
+        ".font-preset-5": {
+          "font-size": "1.4rem",
+          "font-weight": "500",
+          "letter-spacing": "0",
+          "line-height": "150%",
+        },
+      });
+    }),
+  ],
 };
