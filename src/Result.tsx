@@ -1,3 +1,3 @@
 export default function Result() {
-  return <section>result</section>;
+  return <section className="bg-slate-900">result</section>;
 }

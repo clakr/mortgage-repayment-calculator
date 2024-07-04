@@ -66,6 +66,10 @@ export default {
         },
       ],
     },
+    screens: {
+      tablet: "768px",
+      desktop: "1440px",
+    },
     extend: {
       fontFamily: {
         sans: ["Plus Jakarta Sans", ...defaultTheme.fontFamily.sans],
