@@ -1,6 +1,11 @@
+import Body from "./Body";
+import Result from "./Result";
+
 export default function Form() {
-    return <form>
-        <section>left</section>
-        <section>right</section>
+  return (
+    <form className="bg-white">
+      <Body />
+      <Result />
     </form>
+  );
 }

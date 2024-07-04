@@ -6,5 +6,5 @@ export default function App() {
       <h1 className="sr-only">Mortgage Repayment Calculator</h1>
       <Form />
     </>
-  )
+  );
 }
