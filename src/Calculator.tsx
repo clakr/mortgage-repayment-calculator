@@ -41,8 +41,9 @@ function Body() {
           type="number"
           name="amount"
           id="amount"
-          value="300000"
           content="£"
+          defaultValue="300000"
+          required
         />
       </FormField>
       <div className="grid gap-24 tablet:grid-cols-2">
@@ -52,7 +53,8 @@ function Body() {
             type="number"
             name="term"
             id="term"
-            value="25"
+            defaultValue="25"
+            required
             content="years"
             contentPosition="right"
           />
@@ -63,7 +65,8 @@ function Body() {
             type="number"
             name="rate"
             id="rate"
-            value="5.25"
+            defaultValue="5.25"
+            required
             content="%"
             contentPosition="right"
           />
@@ -72,11 +75,23 @@ function Body() {
       <FormField>
         <Label htmlFor="type">Mortgage Type</Label>
         <Label htmlFor="repayment" hasInputChild="radio">
-          <Input type="radio" name="type" id="repayment" />
+          <Input
+            type="radio"
+            name="type"
+            id="repayment"
+            defaultValue="repayment"
+            required
+          />
           Repayment
         </Label>
         <Label htmlFor="interest" hasInputChild="radio">
-          <Input type="radio" name="type" id="interest" />
+          <Input
+            type="radio"
+            name="type"
+            id="interest"
+            defaultValue="interest"
+            required
+          />
           Interest Only
         </Label>
       </FormField>
