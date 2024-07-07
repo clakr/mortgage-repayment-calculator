@@ -1,20 +1,45 @@
 import {
+  FormEvent,
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
+  useContext,
 } from "react";
 import { twMerge } from "tailwind-merge";
+import getRepayment from "../utils/getRepayment";
+import getInterest from "../utils/getInterest";
+import { ResultContext } from "../App";
 
 export default function Calculator() {
+  const resultContext = useContext(ResultContext);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    if (!resultContext) return;
+
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    resultContext.setResult(
+      formData.get("type") === "repayment"
+        ? getRepayment(formData)
+        : getInterest(formData),
+    );
+  }
+
   return (
-    <section className="flex flex-col gap-y-24 px-24 py-32 tablet:gap-y-40 tablet:p-40">
+    <form
+      className="flex flex-col gap-y-24 px-24 py-32 tablet:gap-y-40 tablet:p-40"
+      onSubmit={handleSubmit}
+    >
       <Header />
       <Body />
       <button className="flex items-center justify-center gap-x-16 rounded-full bg-lime py-16 text-slate-900 font-preset-3 tablet:self-start tablet:px-40">
         <img src="./icon-calculator.svg" alt="" />
         Calculate Repayments
       </button>
-    </section>
+    </form>
   );
 }
 
@@ -36,36 +61,28 @@ function Body() {
   return (
     <div className="flex flex-col gap-y-24">
       <FormField>
-        <Label htmlFor="amount">Mortgage Amount</Label>
-        <Input
-          type="number"
-          name="amount"
-          id="amount"
-          content="£"
-          defaultValue="300000"
-          required
-        />
+        <Label htmlFor="principal">Mortgage Amount</Label>
+        <Input type="number" name="principal" id="principal" content="£" />
       </FormField>
       <div className="grid gap-24 tablet:grid-cols-2">
         <FormField>
-          <Label htmlFor="term">Mortgage Term</Label>
+          <Label htmlFor="years">Mortgage Term</Label>
           <Input
             type="number"
-            name="term"
-            id="term"
-            defaultValue="25"
+            name="years"
+            id="years"
             required
             content="years"
             contentPosition="right"
           />
         </FormField>
         <FormField>
-          <Label htmlFor="rate">Interest Rate</Label>
+          <Label htmlFor="annualRate">Interest Rate</Label>
           <Input
             type="number"
-            name="rate"
-            id="rate"
-            defaultValue="5.25"
+            name="annualRate"
+            id="annualRate"
+            step="0.01"
             required
             content="%"
             contentPosition="right"

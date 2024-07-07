@@ -16,6 +16,7 @@ export default {
       },
       white: "#FFFFFF",
       red: "#D73328",
+      black: "#000000",
     },
     spacing: {
       0: "0",

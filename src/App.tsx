@@ -1,29 +1,26 @@
-import { createContext, FormEvent, useState } from "react";
-import Calculator from "./Calculator";
-import Form from "./Form";
-import Result from "./Result";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
+import Calculator from "./components/Calculator";
+import Result from "./components/Result";
+import type { Result as ResultType } from "./types";
 
-export const FormContext = createContext<FormData | null>(null);
+export const ResultContext = createContext<{
+  result: ResultType;
+  setResult: Dispatch<SetStateAction<ResultType>>;
+} | null>(null);
 
 export default function App() {
-  const [form, setForm] = useState<FormData | null>(null);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    setForm(formData);
-  }
+  const [result, setResult] = useState({
+    monthlyRepayment: "0",
+    totalRepayment: "0",
+  });
 
   return (
-    <FormContext.Provider value={form}>
+    <ResultContext.Provider value={{ result, setResult }}>
       <h1 className="sr-only">Mortgage Repayment Calculator</h1>
-      <Form onSubmit={handleSubmit}>
+      <article className="grid w-full max-w-[68.8rem] overflow-hidden bg-white tablet:rounded-[2.4rem] desktop:max-w-[100.8rem] desktop:grid-cols-2">
         <Calculator />
         <Result />
-      </Form>
-    </FormContext.Provider>
+      </article>
+    </ResultContext.Provider>
   );
 }
