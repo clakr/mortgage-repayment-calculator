@@ -40,7 +40,7 @@ export default function Calculator() {
     >
       <Header formRef={formRef} />
       <Body />
-      <button className="flex items-center justify-center gap-x-16 rounded-full bg-lime py-16 text-slate-900 font-preset-3 tablet:self-start tablet:px-40">
+      <button className="flex items-center justify-center gap-x-16 rounded-full bg-lime py-16 text-slate-900 font-preset-3 hover:bg-lime/50 tablet:self-start tablet:px-40">
         <img src="./icon-calculator.svg" alt="" />
         Calculate Repayments
       </button>
@@ -64,7 +64,7 @@ function Header({ formRef }: HeaderProps) {
       <h2 className="text-slate-900 font-preset-2">Mortgage Calculator</h2>
       <button
         type="button"
-        className="self-start text-slate-700 underline font-preset-4 tablet:self-auto"
+        className="self-start text-slate-700 underline font-preset-4 hover:text-slate-900 tablet:self-auto"
         onClick={handleButtonClick}
       >
         Clear All
@@ -85,6 +85,7 @@ function Body() {
           content="£"
           required
         />
+        <InvalidText>This field is required</InvalidText>
       </FormField>
       <div className="grid gap-24 tablet:grid-cols-2">
         <FormField>
@@ -97,6 +98,7 @@ function Body() {
             content="years"
             contentPosition="right"
           />
+          <InvalidText>This field is required</InvalidText>
         </FormField>
         <FormField>
           <Label htmlFor="annualRate">Interest Rate</Label>
@@ -109,10 +111,11 @@ function Body() {
             content="%"
             contentPosition="right"
           />
+          <InvalidText>This field is required</InvalidText>
         </FormField>
       </div>
       <FormField>
-        <Label htmlFor="type">Mortgage Type</Label>
+        <Label>Mortgage Type</Label>
         <Label htmlFor="repayment" hasInputChild="radio">
           <Input
             type="radio"
@@ -133,6 +136,7 @@ function Body() {
           />
           Interest Only
         </Label>
+        <InvalidText>This field is required</InvalidText>
       </FormField>
     </div>
   );
@@ -155,7 +159,7 @@ function Label({ children, hasInputChild, ...rest }: LabelProps) {
       className={twMerge(
         !hasInputChild && "text-slate-700 font-preset-4",
         hasInputChild === "radio" &&
-          "flex gap-x-16 rounded-[.4rem] border border-slate-500 px-16 py-12 text-slate-900 font-preset-3 has-[:checked]:border-lime has-[:checked]:bg-lime/15",
+          "peer flex gap-x-16 rounded-[.4rem] border border-slate-500 px-16 py-12 text-slate-900 font-preset-3 hover:border-lime has-[:checked]:border-lime has-[:checked]:bg-lime/15",
       )}
       {...rest}
     >
@@ -176,11 +180,11 @@ function Input({
 }: InputProps) {
   if (type === "number") {
     return (
-      <div className="group flex overflow-hidden rounded-[.4rem] border border-slate-500 has-[:focus]:border-lime">
+      <div className="group peer flex overflow-hidden rounded-[.4rem] border border-slate-500 hover:border-slate-900 has-[:focus]:border-lime has-[:invalid]:border-red">
         <span
           className={twMerge(
             contentPosition === "right" && "order-1",
-            "bg-slate-100 px-16 py-12 text-slate-700 font-preset-3 group-has-[:focus]:bg-lime group-has-[:focus]:text-slate-900",
+            "bg-slate-100 px-16 py-12 text-slate-700 font-preset-3 group-has-[:focus]:bg-lime group-has-[:invalid]:bg-red group-has-[:focus]:text-slate-900 group-has-[:invalid]:text-white",
           )}
         >
           {content}
@@ -200,5 +204,16 @@ function Input({
       className={twMerge(type === "radio" && "accent-lime")}
       {...rest}
     />
+  );
+}
+
+function InvalidText({ children, ...rest }: HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      className="hidden text-red font-preset-5 peer-has-[:invalid]:block"
+      {...rest}
+    >
+      {children}
+    </span>
   );
 }
