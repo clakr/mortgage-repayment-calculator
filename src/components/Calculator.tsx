@@ -62,7 +62,13 @@ function Body() {
     <div className="flex flex-col gap-y-24">
       <FormField>
         <Label htmlFor="principal">Mortgage Amount</Label>
-        <Input type="number" name="principal" id="principal" content="£" />
+        <Input
+          type="number"
+          name="principal"
+          id="principal"
+          content="£"
+          required
+        />
       </FormField>
       <div className="grid gap-24 tablet:grid-cols-2">
         <FormField>
@@ -154,11 +160,11 @@ function Input({
 }: InputProps) {
   if (type === "number") {
     return (
-      <div className="flex overflow-hidden rounded-[.4rem] border border-slate-500">
+      <div className="group flex overflow-hidden rounded-[.4rem] border border-slate-500 has-[:focus]:border-lime">
         <span
           className={twMerge(
             contentPosition === "right" && "order-1",
-            "bg-slate-100 px-16 py-12 text-slate-700 font-preset-3",
+            "bg-slate-100 px-16 py-12 text-slate-700 font-preset-3 group-has-[:focus]:bg-lime group-has-[:focus]:text-slate-900",
           )}
         >
           {content}
