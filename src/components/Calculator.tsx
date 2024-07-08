@@ -3,7 +3,9 @@ import {
   HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
+  MutableRefObject,
   useContext,
+  useRef,
 } from "react";
 import { twMerge } from "tailwind-merge";
 import getRepayment from "../utils/getRepayment";
@@ -11,6 +13,8 @@ import getInterest from "../utils/getInterest";
 import { ResultContext } from "../App";
 
 export default function Calculator() {
+  const formRef = useRef<HTMLFormElement>(null);
+
   const resultContext = useContext(ResultContext);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -31,9 +35,10 @@ export default function Calculator() {
   return (
     <form
       className="flex flex-col gap-y-24 px-24 py-32 tablet:gap-y-40 tablet:p-40"
+      ref={formRef}
       onSubmit={handleSubmit}
     >
-      <Header />
+      <Header formRef={formRef} />
       <Body />
       <button className="flex items-center justify-center gap-x-16 rounded-full bg-lime py-16 text-slate-900 font-preset-3 tablet:self-start tablet:px-40">
         <img src="./icon-calculator.svg" alt="" />
@@ -43,13 +48,24 @@ export default function Calculator() {
   );
 }
 
-function Header() {
+type HeaderProps = {
+  formRef: MutableRefObject<HTMLFormElement | null>;
+};
+function Header({ formRef }: HeaderProps) {
+  function handleButtonClick() {
+    if (!formRef.current) return;
+
+    const form = formRef.current;
+    form.reset();
+  }
+
   return (
     <div className="flex flex-col gap-y-8 tablet:flex-row tablet:justify-between">
       <h2 className="text-slate-900 font-preset-2">Mortgage Calculator</h2>
       <button
         type="button"
         className="self-start text-slate-700 underline font-preset-4 tablet:self-auto"
+        onClick={handleButtonClick}
       >
         Clear All
       </button>
