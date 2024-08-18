@@ -180,11 +180,11 @@ function Input({
 }: InputProps) {
   if (type === "number") {
     return (
-      <div className="group peer flex overflow-hidden rounded-[.4rem] border border-slate-500 hover:border-slate-900 has-[:focus]:border-lime has-[:invalid]:border-red">
+      <div className="group peer flex overflow-hidden rounded-[.4rem] border border-slate-500 hover:border-slate-900 has-[:focus]:border-lime has-[:user-invalid]:border-red">
         <span
           className={twMerge(
             contentPosition === "right" && "order-1",
-            "bg-slate-100 px-16 py-12 text-slate-700 font-preset-3 group-has-[:focus]:bg-lime group-has-[:invalid]:bg-red group-has-[:focus]:text-slate-900 group-has-[:invalid]:text-white",
+            "bg-slate-100 px-16 py-12 text-slate-700 font-preset-3 group-has-[:focus]:bg-lime group-has-[:user-invalid]:bg-red group-has-[:focus]:text-slate-900 group-has-[:user-invalid]:text-white",
           )}
         >
           {content}
@@ -210,7 +210,7 @@ function Input({
 function InvalidText({ children, ...rest }: HTMLAttributes<HTMLSpanElement>) {
   return (
     <span
-      className="hidden text-red font-preset-5 peer-has-[:invalid]:block"
+      className="hidden text-red font-preset-5 peer-has-[:user-invalid]:block"
       {...rest}
     >
       {children}
